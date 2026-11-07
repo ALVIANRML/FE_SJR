@@ -1,0 +1,4 @@
+.myCarousel .slick-prev::after,
+.myCarousel .slick-next::after {
+  color: #000;
+}
