@@ -1,71 +1,87 @@
-import { Divider, Carousel, Row, Col, Button } from "antd";
-import "../../assets/css/Carousel.css";
-
+import { Row, Col, Button, Card, Typography, Grid } from "antd";
+import { ArrowRightOutlined } from "@ant-design/icons";
+ 
 import DividerComponent from "../../assets/Component/DividerComponent";
 import SisaKreditLimit from "../../assets/Component/SisaKreditLimit";
 import CarouselComponent from "../../assets/Component/CarouselComponent";
-
+ 
+const { Title, Text } = Typography;
+const { useBreakpoint } = Grid;
+ 
+const NAVY = "#182b55";
+ 
 export default function DashboardUtama() {
+  const screens = useBreakpoint();
+  const isMobile = !screens.sm;
+ 
   return (
-    <>
-      <h1
-        className="font-mono font-bold"
+    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ marginBottom: 4 }}>
+        <Title level={4} style={{ margin: 0, color: NAVY }}>
+          Dashboard Utama
+        </Title>
+        <Text type="secondary">Ringkasan kredit limit dan stok.</Text>
+      </div>
+ 
+      {/* ===== Tebusan ===== */}
+      <DividerComponent Teks="Tebusan" />
+      <Card
+        title="Sisa Kredit Limit"
         style={{
-          color: "black",
-          textAlign: "left",
+          borderRadius: 12,
+          borderColor: "#e6e9f0",
+          boxShadow: "0 1px 2px rgba(24, 43, 85, 0.05)",
+        }}
+        styles={{
+          header: {
+            background: "#f7f8fb",
+            borderRadius: "12px 12px 0 0",
+            color: NAVY,
+            minHeight: 46,
+          },
+          body: { padding: 0 },
         }}
       >
-        Dashboard Utama
-      </h1>
-      <div>
-        <DividerComponent Teks="Tebusan" />
-
-        <div
-          style={{
-            height: "auto",
-            border: "2px solid black",
-            borderRadius: "10px",
-          }}
-         
-        >
-          <div>
-            <Row>
-              <Col xs={2} sm={24} md={6} lg={8} xl={24}>
-                <div>
-                  <h3 className="font-mono font-bold" style={{ margin: 5 }}>
-                    Sisa Kredit Limit
-                  </h3>
-                </div>
-              </Col>
-            </Row>
-            <Divider style={{ border: "1px solid black", margin: "0" }} />
-            <Row>
-              <SisaKreditLimit Bagian="Retail" />
-              <SisaKreditLimit Bagian="Industri" />
-              <SisaKreditLimit Bagian="Kam" />
-            </Row>
-          </div>
-        </div>
-      </div>
-      <div>
-        <DividerComponent Teks="Stok" />
-        <CarouselComponent />
-        <CarouselComponent />
-        <div>
-          <Row gutter={16}>
-            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-              <Button style={{ height: "6vh" }} type="primary" block>
-                Button Detail Stok Retail
-              </Button>
-            </Col>
-            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-              <Button style={{ height: "6vh" }} type="primary" block>
-                Button Detail Stok Industri
-              </Button>
-            </Col>
-          </Row>
-        </div>
-      </div>
-    </>
+        <Row>
+          <SisaKreditLimit Bagian="Retail" />
+          <SisaKreditLimit Bagian="Industri" />
+          <SisaKreditLimit Bagian="Kam" last />
+        </Row>
+      </Card>
+ 
+      {/* ===== Stok ===== */}
+      <DividerComponent Teks="Stok" />
+      <CarouselComponent judul="10 Stok Tertinggi Retail (SJR)" />
+      <div style={{ height: 16 }} />
+      <CarouselComponent judul="10 Stok Tertinggi Industri (SJR)" />
+ 
+      <Row gutter={[12, 12]} style={{ marginTop: 8 }}>
+        <Col xs={24} sm={12}>
+          <Button
+            type="primary"
+            size="large"
+            block
+            icon={<ArrowRightOutlined />}
+            iconPosition="end"
+            style={{ background: NAVY, height: isMobile ? 44 : 48 }}
+          >
+            Detail Stok Retail
+          </Button>
+        </Col>
+        <Col xs={24} sm={12}>
+          <Button
+            type="primary"
+            size="large"
+            block
+            icon={<ArrowRightOutlined />}
+            iconPosition="end"
+            style={{ background: NAVY, height: isMobile ? 44 : 48 }}
+          >
+            Detail Stok Industri
+          </Button>
+        </Col>
+      </Row>
+    </div>
   );
 }
+ 
